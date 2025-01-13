@@ -1,0 +1,120 @@
+/* Fonts and Reset */
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  color: #333;
+  background: #f9f9f9;
+}
+
+h1,
+h2 {
+  color: #2c3e50;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+p {
+  color: #7f8c8d;
+}
+
+input,
+select,
+button,
+textarea {
+  font-family: "Inter", sans-serif;
+}
+
+/* Layout */
+.container {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header p {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.card {
+  margin: 20px 0;
+  padding: 20px;
+  background: #f4f6f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Inputs and Buttons */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #34495e;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #dfe6e9;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  display: inline-block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #3498db;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+/* Lists */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  padding: 10px;
+  background: #ecf0f1;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  color: #2c3e50;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 10px;
+  color: #95a5a6;
+  font-size: 0.9rem;
+}
