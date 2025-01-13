@@ -20,20 +20,30 @@
       <section class="card">
         <label for="token">🔑 Enter GitHub Token</label>
         <input type="password" id="token" placeholder="Your GitHub token" />
-        <button id="fetchOrgs">Fetch Organizations</button>
+        <div class="button-with-loader">
+          <button id="fetchOrgs">Fetch Organizations</button>
+          <div class="button-loader" id="fetchOrgsLoader"></div>
+        </div>
       </section>
 
       <section class="card" id="orgContainer" style="display: none">
         <label for="organizations">🏢 Select Organization</label>
         <select id="organizations"></select>
-        <button id="fetchRepos">Fetch Repositories</button>
+        <div class="button-with-loader">
+          <button id="fetchRepos">Fetch Repositories</button>
+          <div class="button-loader" id="fetchReposLoader"></div>
+        </div>
       </section>
 
       <section class="card" id="repoContainer" style="display: none">
         <label for="filter">🔍 Filter by Keyword</label>
         <input type="text" id="filter" placeholder="Enter keyword" />
-        <button id="filterRepos">Filter Repos</button>
-        <ul id="repoList"></ul>
+        <div class="button-with-loader">
+          <button id="filterRepos">Filter Repos</button>
+          <div class="button-loader" id="filterReposLoader"></div>
+      </div>
+      <div class="loader" id="repoListLoader"></div>
+      <ul id="repoList"></ul>
       </section>
 
       <section class="card" id="commandContainer" style="display: none">

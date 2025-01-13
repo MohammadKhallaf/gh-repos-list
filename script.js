@@ -10,8 +10,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const orgContainer = document.getElementById("orgContainer");
   const repoContainer = document.getElementById("repoContainer");
   const commandContainer = document.getElementById("commandContainer");
+  
+  // Loader elements
+  const fetchOrgsLoader = document.getElementById("fetchOrgsLoader");
+  const fetchReposLoader = document.getElementById("fetchReposLoader");
+  const filterReposLoader = document.getElementById("filterReposLoader");
+  const repoListLoader = document.getElementById("repoListLoader");
 
   let repos = []; // Stores fetched repositories
+
+  // Helper function to toggle loading state
+  const toggleLoading = (button, loader, isLoading) => {
+    button.disabled = isLoading;
+    loader.style.display = isLoading ? "block" : "none";
+  };
 
   // Fetch organizations
   fetchOrgsButton.addEventListener("click", async () => {
@@ -20,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please enter a valid GitHub token!");
       return;
     }
+
+    toggleLoading(fetchOrgsButton, fetchOrgsLoader, true);
 
     try {
       const response = await fetch("https://api.github.com/user/orgs", {
@@ -43,6 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (error) {
       alert(`Error: ${error.message}`);
+    } finally {
+      toggleLoading(fetchOrgsButton, fetchOrgsLoader, false);
     }
   });
 
@@ -55,11 +71,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    toggleLoading(fetchReposButton, fetchReposLoader, true);
+    repoListLoader.style.display = "block";
+    repoList.innerHTML = "";
+
+    
     const reposData = [];
     let page = 1;
     let isNextPageAvailable = true;
 
     try {
+
       // Loop to fetch all pages until 1000 repositories are retrieved or no more pages
       while (isNextPageAvailable && reposData.length < 1000) {
         const response = await fetch(
@@ -97,6 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (error) {
       alert(`Error: ${error.message}`);
+    } finally {
+        toggleLoading(fetchReposButton, fetchReposLoader, false);
+        repoListLoader.style.display = "none";
     }
   });
 
@@ -108,29 +133,37 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const filteredRepos = repos.filter((repo) =>
-      repo.name.toLowerCase().includes(keyword)
-    );
-    repoList.innerHTML = ""; // Clear previous filtered list
+    toggleLoading(filterButton, filterReposLoader, true);
+    
+    try {
+      const filteredRepos = repos.filter((repo) =>
+        repo.name.toLowerCase().includes(keyword)
+      );
+      repoList.innerHTML = ""; // Clear previous filtered list
 
-    if (filteredRepos.length === 0) {
-      const li = document.createElement("li");
-      li.textContent = "No repositories found.";
-      repoList.appendChild(li);
-    } else {
-      filteredRepos.forEach((repo) => {
+      if (filteredRepos.length === 0) {
         const li = document.createElement("li");
-        li.textContent = repo.name;
-        li.dataset.cloneUrl = repo.clone_url;
+        li.textContent = "No repositories found.";
         repoList.appendChild(li);
-      });
+      } else {
+        filteredRepos.forEach((repo) => {
+          const li = document.createElement("li");
+          li.textContent = repo.name;
+          li.dataset.cloneUrl = repo.clone_url;
+          repoList.appendChild(li);
+        });
 
-      // Generate Git clone commands separated by semicolons
-      const commands = filteredRepos
-        .map((repo) => `git clone ${repo.clone_url}`)
-        .join(" ; ");
-      commandsTextarea.value = commands;
-      commandContainer.style.display = "block"; // Show commands
+        // Generate Git clone commands separated by semicolons
+        const commands = filteredRepos
+          .map((repo) => `git clone ${repo.clone_url}`)
+          .join(" ; ");
+        commandsTextarea.value = commands;
+        commandContainer.style.display = "block"; // Show commands
+      }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    } finally {
+        toggleLoading(filterButton, filterReposLoader, false);
     }
   });
 });
